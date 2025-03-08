@@ -1,0 +1,46 @@
+# Build and binary folders
+bin/
+obj/
+out/
+
+# User-specific files
+.vscode/
+.idea/
+*.user
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
+
+# Logs and database files
+logs/
+*.log
+*.sqlite
+*.sqlite-journal
+*.db
+*.db-journal
+
+# Environment variables
+.env
+.env.local
+secrets.json
+
+# Visual Studio and Rider settings
+.vs/
+.idea/
+*.rsuser
+*.sln.iml
+
+# NuGet packages
+*.nupkg
+.nuget/
+packages/
+project.lock.json
+project.assets.json
+
+# Entity Framework migrations
+Migrations/
+
+# Resharper files
+*_ReSharper.*
+*.DotSettings.user
