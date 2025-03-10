@@ -7,7 +7,6 @@ public static class ServiceRegistration
         services.AddDbContextServices(configuration);
         services.AddFastEndpointsServices();
         services.AddValidationServices();
-        services.AddOpenApi();
         return services;
     }
 }
