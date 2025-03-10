@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="FastEndPoints" Version="5.35.0" />
+    <PackageReference Include="FastEndpoints.Security" Version="5.35.0" />
     <PackageReference Include="FastEndPoints.Swagger" Version="5.35.0" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="Fluentvalidation.DependencyInjectionExtensions" Version="11.11.0" />

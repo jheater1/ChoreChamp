@@ -7,6 +7,8 @@ public static class ServiceRegistration
         services.AddDbContextServices(configuration);
         services.AddFastEndpointsServices();
         services.AddValidationServices();
+        services.AddAuthenticationServices(configuration);
+        services.AddAuthorizationServices(configuration);
         return services;
     }
 }
