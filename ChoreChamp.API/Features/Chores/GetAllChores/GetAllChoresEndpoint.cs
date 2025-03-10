@@ -16,6 +16,7 @@ public class GetAllChoresEndpoint(ChoreChampDbContext dbContext) :
     public override async Task HandleAsync(CancellationToken c)
     {
         var chores = await dbContext.Chores.ToListAsync(c);
-        await SendAsync(Map.FromEntity(chores));
+        Response = Map.FromEntity(chores);
+        await SendAsync(Response);
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace ChoreChamp.API.Features.Chores.GetChorebyId;
 
 public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext) :
-    Ep.Req<GetChoreByIdRequest>.Res<Results<Ok<GetChoreByIdResponse>, NotFound>>.Map<GetChoreByIdMapper>
+    Ep.Req<GetChoreByIdRequest>.Res<GetChoreByIdResponse>.Map<GetChoreByIdMapper>
 {
     public override void Configure()
     {
@@ -16,7 +16,7 @@ public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext) :
 
     public override async Task HandleAsync(GetChoreByIdRequest r, CancellationToken c)
     {
-        Chore? chore = await dbContext.Chores.FindAsync(r.Id, c);
+        var chore = await dbContext.Chores.FindAsync(r.Id, c);
 
         if (chore == null)
         {
@@ -24,8 +24,7 @@ public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext) :
             return;
         }
 
-        GetChoreByIdResponse response = Map.FromEntity(chore);
-
-        await SendResultAsync(TypedResults.Ok(response));
+        Response = Map.FromEntity(chore);
+        await SendAsync(Response);
     }
 }

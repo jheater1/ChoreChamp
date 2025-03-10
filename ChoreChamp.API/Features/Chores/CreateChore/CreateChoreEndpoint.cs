@@ -15,7 +15,7 @@ public class CreateChoreEndpoint(ChoreChampDbContext dbContext) :
 
     public override async Task HandleAsync(CreateChoreRequest r, CancellationToken c)
     {
-        Chore chore = Map.ToEntity(r);
+        var chore = Map.ToEntity(r);
         dbContext.Chores.Add(chore);
         await dbContext.SaveChangesAsync(c);
         Response = Map.FromEntity(chore);
