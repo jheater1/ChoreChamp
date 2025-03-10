@@ -5,7 +5,7 @@ public static class ServiceRegistration
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContextServices(configuration);
-        services.AddMediatRServices();
+        services.AddFastEndpointsServices();
         services.AddValidationServices();
         return services;
     }
