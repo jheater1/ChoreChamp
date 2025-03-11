@@ -27,6 +27,5 @@ public class UpdateChoreEndpoint(ChoreChampDbContext dbContext) :
         dbContext.Update(chore);
         await dbContext.SaveChangesAsync(c);
         Response = Map.FromEntity(chore);
-        await SendAsync(Response);
     }
 }

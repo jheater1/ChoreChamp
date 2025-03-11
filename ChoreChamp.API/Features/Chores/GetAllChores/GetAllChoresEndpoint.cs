@@ -17,6 +17,5 @@ public class GetAllChoresEndpoint(ChoreChampDbContext dbContext) :
     {
         var chores = await dbContext.Chores.ToListAsync(c);
         Response = Map.FromEntity(chores);
-        await SendAsync(Response);
     }
 }

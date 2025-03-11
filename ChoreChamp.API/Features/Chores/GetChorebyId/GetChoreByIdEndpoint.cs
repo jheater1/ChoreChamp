@@ -25,6 +25,5 @@ public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext) :
         }
 
         Response = Map.FromEntity(chore);
-        await SendAsync(Response);
     }
 }

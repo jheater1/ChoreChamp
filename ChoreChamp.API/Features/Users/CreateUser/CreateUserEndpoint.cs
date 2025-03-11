@@ -1,4 +1,5 @@
 ﻿using ChoreChamp.API.Infrastructure.Persistence;
+using ChoreChamp.API.Infrastructure.Security;
 using FastEndpoints;
 
 namespace ChoreChamp.API.Features.Users.CreateUser;
@@ -14,8 +15,7 @@ public class CreateUserEndpoint(ChoreChampDbContext dbContext) : Ep.Req<CreateUs
     public override async Task HandleAsync(CreateUserRequest r, CancellationToken c)
     {
         var user = Map.ToEntity(r);
-        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(r.Password);
-        user.Points = 0;
+        user.PasswordHash = PasswordHasher.HashPassword(r.Password);
         await dbContext.AddAsync(user);
         await dbContext.SaveChangesAsync(c);
         await SendCreatedAtAsync<CreateUserEndpoint>(new { id = user.Id }, Map.FromEntity(user));

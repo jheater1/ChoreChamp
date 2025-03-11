@@ -18,7 +18,7 @@ public class CreateChoreEndpoint(ChoreChampDbContext dbContext) :
         var chore = Map.ToEntity(r);
         dbContext.Chores.Add(chore);
         await dbContext.SaveChangesAsync(c);
-        Response = Map.FromEntity(chore);
-        await SendCreatedAtAsync<CreateChoreEndpoint>(new {id = chore.Id}, Response);
+        var response = Map.FromEntity(chore);
+        await SendCreatedAtAsync<CreateChoreEndpoint>(new {id = chore.Id}, response);
     }
 }
