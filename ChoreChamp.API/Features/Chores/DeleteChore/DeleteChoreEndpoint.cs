@@ -15,14 +15,16 @@ public class DeleteChoreEndpoint(ChoreChampDbContext dbContext) :
 
     public override async Task HandleAsync(DeleteChoreRequest r, CancellationToken c)
     {
-        var rowsDeleted = await dbContext.Chores.Where(e => e.Id == r.Id).ExecuteDeleteAsync(c);
-        
-        if (rowsDeleted == 0)
+        var deleted = await dbContext.Chores
+            .Where(e => e.Id == r.Id)
+            .ExecuteDeleteAsync(c);
+
+        if (deleted == 0)
         {
             await SendNotFoundAsync(c);
             return;
         }
-
+       
         await SendNoContentAsync();
     }
 }
