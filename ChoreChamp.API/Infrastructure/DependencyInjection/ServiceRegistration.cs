@@ -27,11 +27,13 @@ public static class ServiceRegistration
         services.AddValidatorsFromAssembly(typeof(Program).Assembly);
         return services;
     }
+
     private static IServiceCollection AddFastEndpointsServices(this IServiceCollection services)
     {
         services.AddFastEndpoints().SwaggerDocument();
         return services;
     }
+
     private static IServiceCollection AddDbContextServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connection = new SqliteConnection("DataSource=myshareddb;mode=memory;cache=shared");
@@ -53,7 +55,10 @@ public static class ServiceRegistration
 
     private static IServiceCollection AddAuthorizationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAuthorization();
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(PolicyNames.Admin, policy => policy.RequireRole(RoleNames.Admin));
+        });
         return services;
     }
 

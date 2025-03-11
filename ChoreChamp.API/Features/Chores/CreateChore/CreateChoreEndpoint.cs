@@ -1,5 +1,5 @@
-﻿using ChoreChamp.API.Domain;
-using ChoreChamp.API.Infrastructure.Persistence;
+﻿using ChoreChamp.API.Infrastructure.Persistence;
+using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
 
 namespace ChoreChamp.API.Features.Chores.CreateChore;
@@ -9,7 +9,7 @@ public class CreateChoreEndpoint(ChoreChampDbContext dbContext) :
 {
     public override void Configure()
     {
-        Post("api/chores");
+        Post(ApiRoutes.Chores.Base);
         AllowAnonymous();
     }
 
