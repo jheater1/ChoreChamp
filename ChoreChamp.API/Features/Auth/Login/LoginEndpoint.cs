@@ -30,10 +30,7 @@ public class LoginEndpoint(ChoreChampDbContext dbContext, IPasswordService passw
 
         await CookieAuth.SignInAsync(u =>
         {
-            u.Roles.Add(user.IsParent ? 
-                Infrastructure.Security.RoleNames.Admin :
-                Infrastructure.Security.RoleNames.User
-            );
+            u.Roles.Add(user.IsAdmin ? RoleNames.Admin : RoleNames.User);
         });
 
         await SendNoContentAsync();
