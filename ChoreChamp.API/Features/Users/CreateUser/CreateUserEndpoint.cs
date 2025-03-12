@@ -23,7 +23,7 @@ public class CreateUserEndpoint(ChoreChampDbContext dbContext, IPasswordService 
         if (userExists)
         {
             AddError("A user with this email already exists");
-            await SendErrorsAsync(409, cancellation: c);
+            await SendErrorsAsync(409, c);
             return;
         }
 

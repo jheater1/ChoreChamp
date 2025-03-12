@@ -4,10 +4,15 @@ using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
 using FastEndpoints.Security;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ChoreChamp.API.Features.Auth.Login;
 
-public class LoginEndpoint(ChoreChampDbContext dbContext, IPasswordService passwordService) :
+public class LoginEndpoint(
+    ChoreChampDbContext dbContext, 
+    IPasswordService passwordService, 
+    IRolePermissionService rolePermissionService
+) :
     Ep.Req<LoginRequest>.NoRes
 {
     public override void Configure()
@@ -31,6 +36,14 @@ public class LoginEndpoint(ChoreChampDbContext dbContext, IPasswordService passw
         await CookieAuth.SignInAsync(u =>
         {
             u.Roles.Add(user.IsAdmin ? RoleNames.Admin : RoleNames.User);
+            var permissions = rolePermissionService.GetPermissionsForRoles(u.Roles.First());
+            
+            foreach (var permission in permissions)
+            {
+                u.Permissions.Add(permission);
+            }
+
+            u[ClaimTypes.Email] = user.Email;
         });
 
         await SendNoContentAsync();

@@ -12,6 +12,7 @@ public static class ApiRoutes
         public const string Base = "auth";
         public const string Login = Base + "/login";
         public const string Logout = Base + "/logout";
+        public const string ChangePassword = Base + "/changepassword";
     }
 
     public static class Chores

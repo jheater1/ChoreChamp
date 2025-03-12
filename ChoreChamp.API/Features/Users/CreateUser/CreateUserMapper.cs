@@ -11,13 +11,13 @@ public class CreateUserMapper : Mapper<CreateUserRequest, CreateUserResponse, Us
         {
             Name = r.Name,
             Email = r.Email,
-            IsParent = r.IsParent
+            IsAdmin = r.IsAdmin
         };
     }
 
     public override CreateUserResponse FromEntity(User e)
     {
-        return new CreateUserResponse(e.Id, e.Name, e.Email, e.IsParent, e.Points);
+        return new CreateUserResponse(e.Id, e.Name, e.Email, e.IsAdmin, e.Points);
     }
 }
 
