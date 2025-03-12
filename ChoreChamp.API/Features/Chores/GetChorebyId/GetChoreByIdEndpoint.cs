@@ -1,5 +1,6 @@
 ﻿using ChoreChamp.API.Domain;
 using ChoreChamp.API.Infrastructure.Persistence;
+using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -10,7 +11,7 @@ public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext) :
 {
     public override void Configure()
     {
-        Get("api/chores/{id}");
+        Get(ApiRoutes.Chores.ById);
         AllowAnonymous();
     }
 

@@ -1,5 +1,6 @@
 ﻿using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
+using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,7 @@ public class CreateUserEndpoint(ChoreChampDbContext dbContext, IPasswordService 
 {
     public override void Configure()
     {
-        Post("/api/users");
+        Post(ApiRoutes.Users.Base);
         AllowAnonymous();
     }
 
@@ -22,7 +23,7 @@ public class CreateUserEndpoint(ChoreChampDbContext dbContext, IPasswordService 
         if (userExists)
         {
             AddError("A user with this email already exists");
-            await SendErrorsAsync(409, cancellation: c);
+            await SendErrorsAsync(409, c);
             return;
         }
 
