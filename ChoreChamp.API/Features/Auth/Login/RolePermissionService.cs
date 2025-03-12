@@ -6,8 +6,14 @@ public class RolePermissionService : IRolePermissionService
 {
     private readonly Dictionary<string, IEnumerable<string>> _rolePermissions = new()
     {
-        { RoleNames.Admin, new List<string> { PermissionNames.ChangePassword } },
-        { RoleNames.User, new List<string> { PermissionNames.ChangePassword } }
+        {
+            RoleNames.Admin,
+            new List<string> { PermissionNames.ChangePassword }
+        },
+        {
+            RoleNames.User,
+            new List<string> { PermissionNames.ChangePassword }
+        },
     };
 
     public IEnumerable<string> GetPermissionsForRoles(string role)

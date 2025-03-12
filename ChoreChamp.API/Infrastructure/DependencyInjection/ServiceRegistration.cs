@@ -12,7 +12,10 @@ namespace ChoreChamp.API.Infrastructure.DependencyInjection;
 
 public static class ServiceRegistration
 {
-    public static IServiceCollection RegisterInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterInfrastructureServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services.AddDbContextServices(configuration);
         services.AddFastEndpointsServices();
@@ -36,7 +39,10 @@ public static class ServiceRegistration
         return services;
     }
 
-    private static IServiceCollection AddDbContextServices(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDbContextServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         var connection = new SqliteConnection(configuration.GetConnectionString("SqlLiteInMemory"));
         connection.Open();

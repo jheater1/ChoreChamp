@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChoreChamp.API.Features.Users.CreateUser;
 
-public class CreateUserEndpoint(ChoreChampDbContext dbContext, IPasswordService passwordService) :
-    Ep.Req<CreateUserRequest>.Res<CreateUserResponse>.Map<CreateUserMapper>
+public class CreateUserEndpoint(ChoreChampDbContext dbContext, IPasswordService passwordService)
+    : Ep.Req<CreateUserRequest>.Res<CreateUserResponse>.Map<CreateUserMapper>
 {
     public override void Configure()
     {

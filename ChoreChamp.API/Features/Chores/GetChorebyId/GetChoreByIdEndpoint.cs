@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ChoreChamp.API.Features.Chores.GetChorebyId;
 
-public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext) :
-    Ep.Req<GetChoreByIdRequest>.Res<GetChoreByIdResponse>.Map<GetChoreByIdMapper>
+public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext)
+    : Ep.Req<GetChoreByIdRequest>.Res<GetChoreByIdResponse>.Map<GetChoreByIdMapper>
 {
     public override void Configure()
     {

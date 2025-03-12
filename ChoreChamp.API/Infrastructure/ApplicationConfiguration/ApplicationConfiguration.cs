@@ -11,10 +11,7 @@ public static class ConfigureApplication
         app.ConfigureAuthentication();
         app.ConfigureAuthorization();
 
-        if (app.Environment.IsDevelopment())
-        {
-        
-        }
+        if (app.Environment.IsDevelopment()) { }
     }
 
     private static void ConfigureAuthentication(this WebApplication app)

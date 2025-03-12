@@ -1,20 +1,21 @@
-﻿using ChoreChamp.API.Infrastructure.Persistence;
+﻿using System.Security.Claims;
+using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
 using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace ChoreChamp.API.Features.Auth.ChangePassword;
 
-public class ChangePasswordEndpoint(ChoreChampDbContext dbContext, IPasswordService passwordService) :
-    Ep.Req<ChangePasswordRequest>.NoRes
+public class ChangePasswordEndpoint(ChoreChampDbContext dbContext, IPasswordService passwordService)
+    : Ep.Req<ChangePasswordRequest>.NoRes
 {
     public override void Configure()
     {
         Post(ApiRoutes.Auth.ChangePassword);
         Permissions(PermissionNames.ChangePassword);
     }
+
     public override async Task HandleAsync(ChangePasswordRequest request, CancellationToken c)
     {
         var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
@@ -31,9 +32,9 @@ public class ChangePasswordEndpoint(ChoreChampDbContext dbContext, IPasswordServ
             return;
         }
 
-        var user = await dbContext.Users
-         .Where(user => user.Email == userEmail)
-         .FirstOrDefaultAsync(c);
+        var user = await dbContext
+            .Users.Where(user => user.Email == userEmail)
+            .FirstOrDefaultAsync(c);
 
         if (user == null || !passwordService.VerifyPassword(request.Password, user.PasswordHash))
         {
@@ -43,7 +44,9 @@ public class ChangePasswordEndpoint(ChoreChampDbContext dbContext, IPasswordServ
 
         var newHashedPassword = passwordService.HashPassword(request.NewPassword);
 
-        await dbContext.Users.ExecuteUpdateAsync(setters => setters.SetProperty(u => u.PasswordHash, newHashedPassword));
+        await dbContext.Users.ExecuteUpdateAsync(setters =>
+            setters.SetProperty(u => u.PasswordHash, newHashedPassword)
+        );
 
         await SendNoContentAsync();
     }
