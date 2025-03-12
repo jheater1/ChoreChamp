@@ -7,14 +7,18 @@ assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**As a [role],**
+**I want [an action or feature],**
+**So that [a reason or benefit].**
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Acceptance Criteria:**
+- [ ] Criteria 1: Describe the first acceptance criterion here.
+- [ ] Criteria 2: Describe the second acceptance criterion here.
+- [ ] Criteria 3: Describe additional criteria as needed.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Definition of Done:**
+- [ ] All acceptance criteria are met.
+- [ ] Code is reviewed and approved.
+- [ ] Necessary tests are written and pass.
+- [ ] Documentation is updated, if applicable.
+- [ ] Feature is deployed to the [environment name].
