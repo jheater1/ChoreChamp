@@ -1,5 +1,6 @@
 ﻿using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
+using ChoreChamp.API.Infrastructure.Seeder;
 using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
@@ -16,9 +17,15 @@ public static class ServiceRegistration
         services.AddDbContextServices(configuration);
         services.AddFastEndpointsServices();
         services.AddValidationServices();
-        services.AddAuthenticationServices(configuration);
-        services.AddAuthorizationServices(configuration);
-        services.AddPasswordService(configuration);
+        services.AddAuthenticationServices();
+        services.AddAuthorizationServices();
+        services.AddPasswordService();
+
+        if (configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development")
+        {
+            services.AddDataSeeder();
+        }
+
         return services;
     }
 
@@ -51,21 +58,27 @@ public static class ServiceRegistration
         return services;
     }
 
-    private static IServiceCollection AddAuthorizationServices(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthorizationServices(this IServiceCollection services)
     {
         services.AddAuthorization();
         return services;
     }
 
-    private static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthenticationServices(this IServiceCollection services)
     {
         services.AddAuthenticationCookie(validFor: TimeSpan.FromMinutes(10));
         return services;
     }
 
-    private static IServiceCollection AddPasswordService(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddPasswordService(this IServiceCollection services)
     {
         services.AddScoped<IPasswordService, PasswordService>();
+        return services;
+    }
+
+    private static IServiceCollection AddDataSeeder(this IServiceCollection services)
+    {
+        services.AddScoped<DevDataSeeder>();
         return services;
     }
 }
