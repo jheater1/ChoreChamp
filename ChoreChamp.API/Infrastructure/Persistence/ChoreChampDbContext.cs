@@ -3,8 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChoreChamp.API.Infrastructure.Persistence;
 
-public class ChoreChampDbContext(DbContextOptions<ChoreChampDbContext> options) : DbContext(options)
+public class ChoreChampDbContext : DbContext
 {
-    public DbSet<Chore> Chores { get; set; }
-    public DbSet<User> Users { get; set; }
+    public ChoreChampDbContext(DbContextOptions<ChoreChampDbContext> options)
+        : base(options) { }
+
+    public ChoreChampDbContext() { }
+
+    public virtual DbSet<Chore> Chores { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 }
