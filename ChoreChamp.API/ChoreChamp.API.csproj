@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AssignedChore\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
