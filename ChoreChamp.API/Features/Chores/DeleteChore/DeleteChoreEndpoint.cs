@@ -9,7 +9,11 @@ public class DeleteChoreEndpoint(ChoreChampDbContext dbContext) : Ep.Req<DeleteC
 {
     public override void Configure()
     {
+<<<<<<< HEAD
         Delete(ApiRoutes.Chores.ById);
+=======
+        Delete(ApiRoutes.Chores.ById);  
+>>>>>>> dev
         AllowAnonymous();
     }
 
