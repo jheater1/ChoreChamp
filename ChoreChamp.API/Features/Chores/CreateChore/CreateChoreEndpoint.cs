@@ -4,8 +4,8 @@ using FastEndpoints;
 
 namespace ChoreChamp.API.Features.Chores.CreateChore;
 
-public class CreateChoreEndpoint(ChoreChampDbContext dbContext) : 
-    Ep.Req<CreateChoreRequest>.Res<CreateChoreResponse>.Map<CreateChoreMapper> 
+public class CreateChoreEndpoint(ChoreChampDbContext dbContext)
+    : Ep.Req<CreateChoreRequest>.Res<CreateChoreResponse>.Map<CreateChoreMapper>
 {
     public override void Configure()
     {
@@ -19,6 +19,6 @@ public class CreateChoreEndpoint(ChoreChampDbContext dbContext) :
         dbContext.Chores.Add(chore);
         await dbContext.SaveChangesAsync(c);
         var response = Map.FromEntity(chore);
-        await SendCreatedAtAsync<CreateChoreEndpoint>(new {id = chore.Id}, response);
+        await SendCreatedAtAsync<CreateChoreEndpoint>(new { id = chore.Id }, response);
     }
 }

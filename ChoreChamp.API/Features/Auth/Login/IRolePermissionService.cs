@@ -1,6 +1,4 @@
-﻿using ChoreChamp.API.Infrastructure.Security;
-
-namespace ChoreChamp.API.Features.Auth.Login;
+﻿namespace ChoreChamp.API.Features.Auth.Login;
 
 public interface IRolePermissionService
 {

@@ -11,7 +11,7 @@ public class CreateUserMapper : Mapper<CreateUserRequest, CreateUserResponse, Us
         {
             Name = r.Name,
             Email = r.Email,
-            IsAdmin = r.IsAdmin
+            IsAdmin = r.IsAdmin,
         };
     }
 
@@ -20,4 +20,3 @@ public class CreateUserMapper : Mapper<CreateUserRequest, CreateUserResponse, Us
         return new CreateUserResponse(e.Id, e.Name, e.Email, e.IsAdmin, e.Points);
     }
 }
-
