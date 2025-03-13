@@ -12,7 +12,7 @@ public class UpdateChoreMapper : Mapper<UpdateChoreRequest, UpdateChoreResponse,
             Id = r.Id,
             Name = r.Name,
             Description = r.Description,
-            Points = r.Points
+            Points = r.Points,
         };
     }
 

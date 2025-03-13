@@ -1,4 +1,5 @@
-﻿using ChoreChamp.API.Infrastructure.Persistence;
+﻿using ChoreChamp.API.Features.Auth.Login;
+using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
 using FastEndpoints;
 using FastEndpoints.Security;
@@ -11,14 +12,18 @@ namespace ChoreChamp.API.Infrastructure.DependencyInjection;
 
 public static class ServiceRegistration
 {
-    public static IServiceCollection RegisterInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterInfrastructureServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services.AddDbContextServices(configuration);
         services.AddFastEndpointsServices();
         services.AddValidationServices();
-        services.AddAuthenticationServices(configuration);
-        services.AddAuthorizationServices(configuration);
-        services.AddPasswordService(configuration);
+        services.AddAuthenticationServices();
+        services.AddAuthorizationServices();
+        services.AddPasswordService();
+        services.AddRolePermissionService();
         return services;
     }
 
@@ -34,9 +39,12 @@ public static class ServiceRegistration
         return services;
     }
 
-    private static IServiceCollection AddDbContextServices(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDbContextServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
-        var connection = new SqliteConnection("DataSource=myshareddb;mode=memory;cache=shared");
+        var connection = new SqliteConnection(configuration.GetConnectionString("SqlLiteInMemory"));
         connection.Open();
 
         services.AddDbContext<ChoreChampDbContext>(options =>
@@ -53,7 +61,7 @@ public static class ServiceRegistration
         return services;
     }
 
-    private static IServiceCollection AddAuthorizationServices(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthorizationServices(this IServiceCollection services)
     {
         services.AddAuthorization(options =>
         {
@@ -62,15 +70,21 @@ public static class ServiceRegistration
         return services;
     }
 
-    private static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthenticationServices(this IServiceCollection services)
     {
         services.AddAuthenticationCookie(validFor: TimeSpan.FromMinutes(10));
         return services;
     }
 
-    private static IServiceCollection AddPasswordService(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddPasswordService(this IServiceCollection services)
     {
         services.AddScoped<IPasswordService, PasswordService>();
+        return services;
+    }
+
+    private static IServiceCollection AddRolePermissionService(this IServiceCollection services)
+    {
+        services.AddScoped<IRolePermissionService, RolePermissionService>();
         return services;
     }
 }
