@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Templates\Features\Feature-Full\.template.config\template.json" />
+    <Content Include="Templates\Features\Feature-NoRequest\.template.config\template.json" />
+    <Content Include="Templates\Features\Feature-NoResponse\.template.config\template.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FastEndPoints" Version="5.35.0" />
     <PackageReference Include="FastEndpoints.Security" Version="5.35.0" />
@@ -29,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\AssignedChore\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
