@@ -21,6 +21,7 @@ public static class ConfigureApplication
     {
         app.UseAuthentication();
     }
+
     private static void ConfigureAuthorization(this WebApplication app)
     {
         app.UseAuthorization();

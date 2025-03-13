@@ -1,4 +1,5 @@
 ﻿using ChoreChamp.API.Infrastructure.Persistence;
+using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,7 @@ public class GetAllChoresEndpoint(ChoreChampDbContext dbContext) :
 {
     public override void Configure()
     {
-        Get("api/chores");
+        Get(ApiRoutes.Chores.Base);
         AllowAnonymous();
     }
 
