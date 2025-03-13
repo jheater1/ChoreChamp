@@ -1,4 +1,5 @@
-﻿using FastEndpoints;
+﻿using ChoreChamp.API.Infrastructure.Seeder;
+using FastEndpoints;
 using FastEndpoints.Swagger;
 
 namespace ChoreChamp.API.Infrastructure.ApplicationConfiguration;
@@ -11,7 +12,17 @@ public static class ConfigureApplication
         app.ConfigureAuthentication();
         app.ConfigureAuthorization();
 
-        if (app.Environment.IsDevelopment()) { }
+        if (app.Environment.IsDevelopment())
+        {
+            SeedDatabase(app);
+        }
+    }
+
+    private static void SeedDatabase(WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var seeder = scope.ServiceProvider.GetRequiredService<DevDataSeeder>();
+        seeder.SeedAsync().GetAwaiter().GetResult();
     }
 
     private static void ConfigureAuthentication(this WebApplication app)

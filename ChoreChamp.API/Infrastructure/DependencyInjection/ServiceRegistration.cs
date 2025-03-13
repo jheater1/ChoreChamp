@@ -1,6 +1,7 @@
 ﻿using ChoreChamp.API.Features.Auth.Login;
 using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
+using ChoreChamp.API.Infrastructure.Seeder;
 using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
@@ -24,6 +25,11 @@ public static class ServiceRegistration
         services.AddAuthorizationServices();
         services.AddPasswordService();
         services.AddRolePermissionService();
+
+        if (configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development")
+        {
+            services.AddDataSeeder();
+        }
         return services;
     }
 
@@ -85,6 +91,12 @@ public static class ServiceRegistration
     private static IServiceCollection AddRolePermissionService(this IServiceCollection services)
     {
         services.AddScoped<IRolePermissionService, RolePermissionService>();
+        return services;
+    }
+
+    private static IServiceCollection AddDataSeeder(this IServiceCollection services)
+    {
+        services.AddScoped<DevDataSeeder>();
         return services;
     }
 }

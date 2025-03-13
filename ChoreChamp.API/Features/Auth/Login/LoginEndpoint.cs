@@ -1,3 +1,4 @@
+﻿using System.Security.Claims;
 using System.Security.Claims;
 using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
