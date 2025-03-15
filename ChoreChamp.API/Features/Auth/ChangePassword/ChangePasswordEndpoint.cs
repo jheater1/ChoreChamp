@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChoreChamp.API.Features.Auth.ChangePassword;
 
-public class ChangePasswordEndpoint(ChoreChampDbContext dbContext, IPasswordService passwordService)
-    : Ep.Req<ChangePasswordRequest>.NoRes
+public class ChangePasswordEndpoint(
+    IChoreChampDbContext dbContext,
+    IPasswordService passwordService
+) : Ep.Req<ChangePasswordRequest>.NoRes
 {
     public override void Configure()
     {
@@ -44,9 +46,8 @@ public class ChangePasswordEndpoint(ChoreChampDbContext dbContext, IPasswordServ
 
         var newHashedPassword = passwordService.HashPassword(request.NewPassword);
 
-        await dbContext.Users.ExecuteUpdateAsync(setters =>
-            setters.SetProperty(u => u.PasswordHash, newHashedPassword)
-        );
+        user.PasswordHash = newHashedPassword;
+        await dbContext.SaveChangesAsync(c);
 
         await SendNoContentAsync();
     }

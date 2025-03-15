@@ -3,7 +3,7 @@ using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChoreChamp.API.Infrastructure.Seeder;
+namespace ChoreChamp.API.Infrastructure.Persistence.Seeder;
 
 public class DevDataSeeder
 {
@@ -11,7 +11,11 @@ public class DevDataSeeder
     private readonly IPasswordService _passwordService;
     private readonly ILogger<DevDataSeeder> _logger;
 
-    public DevDataSeeder(ChoreChampDbContext dbContext, IPasswordService passwordService, ILogger<DevDataSeeder> logger)
+    public DevDataSeeder(
+        ChoreChampDbContext dbContext,
+        IPasswordService passwordService,
+        ILogger<DevDataSeeder> logger
+    )
     {
         _dbContext = dbContext;
         _passwordService = passwordService;
@@ -41,7 +45,8 @@ public class DevDataSeeder
 
     private async Task SeedUsersAsync()
     {
-        if (await _dbContext.Users.AsNoTracking().AnyAsync()) return;
+        if (await _dbContext.Users.AsNoTracking().AnyAsync())
+            return;
 
         var users = new List<User>
         {
@@ -52,7 +57,7 @@ public class DevDataSeeder
                 PasswordHash = _passwordService.HashPassword("AdminPassword123"),
                 IsAdmin = true,
                 Points = 0,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
             },
             new User
             {
@@ -61,8 +66,8 @@ public class DevDataSeeder
                 PasswordHash = _passwordService.HashPassword("UserPassword123"),
                 IsAdmin = false,
                 Points = 0,
-                CreatedAt = DateTime.UtcNow
-            }
+                CreatedAt = DateTime.UtcNow,
+            },
         };
 
         _dbContext.Users.AddRange(users);
@@ -72,7 +77,8 @@ public class DevDataSeeder
 
     private async Task SeedChoresAsync()
     {
-        if (await _dbContext.Chores.AsNoTracking().AnyAsync()) return;
+        if (await _dbContext.Chores.AsNoTracking().AnyAsync())
+            return;
 
         var chores = new List<Chore>
         {
@@ -87,7 +93,7 @@ public class DevDataSeeder
                 Name = "Do the dishes",
                 Description = "Wash the dishes in the sink and put them away",
                 Points = 10,
-            }
+            },
         };
 
         _dbContext.Chores.AddRange(chores);

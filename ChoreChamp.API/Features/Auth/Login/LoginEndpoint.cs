@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ChoreChamp.API.Features.Auth.Login;
 
 public class LoginEndpoint(
-    ChoreChampDbContext dbContext,
+    IChoreChampDbContext dbContext,
     IPasswordService passwordService,
     IRolePermissionService rolePermissionService
 ) : Ep.Req<LoginRequest>.NoRes

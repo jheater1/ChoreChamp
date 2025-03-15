@@ -1,4 +1,5 @@
-﻿using ChoreChamp.API.Infrastructure.Persistence;
+﻿using ChoreChamp.API.Domain;
+using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
 using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChoreChamp.API.Features.Users.CreateUser;
 
-public class CreateUserEndpoint(ChoreChampDbContext dbContext, IPasswordService passwordService)
+public class CreateUserEndpoint(IChoreChampDbContext dbContext, IPasswordService passwordService)
     : Ep.Req<CreateUserRequest>.Res<CreateUserResponse>.Map<CreateUserMapper>
 {
     public override void Configure()
@@ -28,7 +29,7 @@ public class CreateUserEndpoint(ChoreChampDbContext dbContext, IPasswordService 
         }
 
         user.PasswordHash = passwordService.HashPassword(r.Password);
-        await dbContext.AddAsync(user);
+        await dbContext.Users.AddAsync(user, c);
         await dbContext.SaveChangesAsync(c);
         await SendCreatedAtAsync<CreateUserEndpoint>(new { id = user.Id }, Map.FromEntity(user));
     }
