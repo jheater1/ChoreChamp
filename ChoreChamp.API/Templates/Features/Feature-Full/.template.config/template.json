@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Your Name",
+  "classifications": [ "ChoreChamp Full Feature" ],
+  "name": "ChoreChamp Feature with Request & Response",
+  "identity": "ChoreChamp.FeatureFull",
+  "shortName": "feature-full",
+  "sourceName": "Feature",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  }
+}
