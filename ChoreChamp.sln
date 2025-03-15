@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChoreChamp.API", "ChoreChamp.API\ChoreChamp.API.csproj", "{9E8E63EA-965B-43F9-B19B-0888576C53D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChoreChamp.Test", "ChoreChamp.Test\ChoreChamp.Test.csproj", "{EF1FF502-E884-42B0-98BB-08A73B406E9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{9E8E63EA-965B-43F9-B19B-0888576C53D3}.Release|x64.Build.0 = Release|Any CPU
 		{9E8E63EA-965B-43F9-B19B-0888576C53D3}.Release|x86.ActiveCfg = Release|Any CPU
 		{9E8E63EA-965B-43F9-B19B-0888576C53D3}.Release|x86.Build.0 = Release|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Debug|x64.Build.0 = Debug|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Debug|x86.Build.0 = Debug|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Release|x64.ActiveCfg = Release|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Release|x64.Build.0 = Release|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Release|x86.ActiveCfg = Release|Any CPU
+		{EF1FF502-E884-42B0-98BB-08A73B406E9F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

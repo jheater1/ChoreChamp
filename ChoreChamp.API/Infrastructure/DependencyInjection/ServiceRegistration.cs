@@ -1,13 +1,14 @@
 ﻿using ChoreChamp.API.Features.Auth.Login;
 using ChoreChamp.API.Infrastructure.Persistence;
+using ChoreChamp.API.Infrastructure.Persistence.Seeder;
 using ChoreChamp.API.Infrastructure.Security;
-using ChoreChamp.API.Infrastructure.Seeder;
 using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using FluentValidation;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ChoreChamp.API.Infrastructure.DependencyInjection;
 
@@ -63,6 +64,8 @@ public static class ServiceRegistration
             var context = serviceProvider.GetRequiredService<ChoreChampDbContext>();
             context.Database.EnsureCreated();
         }
+
+        services.AddScoped<IChoreChampDbContext, ChoreChampDbContext>();
 
         return services;
     }

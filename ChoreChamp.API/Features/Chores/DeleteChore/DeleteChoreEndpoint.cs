@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChoreChamp.API.Features.Chores.DeleteChore;
 
-public class DeleteChoreEndpoint(ChoreChampDbContext dbContext) : Ep.Req<DeleteChoreRequest>.NoRes
+public class DeleteChoreEndpoint(IChoreChampDbContext dbContext) : Ep.Req<DeleteChoreRequest>.NoRes
 {
     public override void Configure()
     {
@@ -15,13 +15,16 @@ public class DeleteChoreEndpoint(ChoreChampDbContext dbContext) : Ep.Req<DeleteC
 
     public override async Task HandleAsync(DeleteChoreRequest r, CancellationToken c)
     {
-        var deleted = await dbContext.Chores.Where(e => e.Id == r.Id).ExecuteDeleteAsync(c);
+        var deleted = await dbContext.Chores.Where(e => e.Id == r.Id).FirstOrDefaultAsync(c);
 
-        if (deleted == 0)
+        if (deleted == null)
         {
             await SendNotFoundAsync(c);
             return;
         }
+
+        dbContext.Chores.Remove(deleted);
+        await dbContext.SaveChangesAsync(c);
 
         await SendNoContentAsync();
     }

@@ -1,7 +1,7 @@
 ﻿using ChoreChamp.API.Domain;
 using Xunit;
 
-namespace ChoreChamp.API.Tests.Domain;
+namespace ChoreChamp.Test.UnitTests.Domain.AssignedChores;
 
 public class AssignedChoreTests
 {

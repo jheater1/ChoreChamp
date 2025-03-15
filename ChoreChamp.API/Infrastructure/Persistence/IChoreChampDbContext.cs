@@ -1,0 +1,11 @@
+﻿using ChoreChamp.API.Domain;
+using Microsoft.EntityFrameworkCore;
+
+namespace ChoreChamp.API.Infrastructure.Persistence;
+
+public interface IChoreChampDbContext
+{
+    DbSet<Chore> Chores { get; set; }
+    DbSet<User> Users { get; set; }
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+}

@@ -1,10 +1,11 @@
-﻿using ChoreChamp.API.Infrastructure.Persistence;
+﻿using ChoreChamp.API.Features.Chores.GetChorebyId;
+using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
 
 namespace ChoreChamp.API.Features.Chores.CreateChore;
 
-public class CreateChoreEndpoint(ChoreChampDbContext dbContext)
+public class CreateChoreEndpoint(IChoreChampDbContext dbContext)
     : Ep.Req<CreateChoreRequest>.Res<CreateChoreResponse>.Map<CreateChoreMapper>
 {
     public override void Configure()
@@ -19,6 +20,6 @@ public class CreateChoreEndpoint(ChoreChampDbContext dbContext)
         dbContext.Chores.Add(chore);
         await dbContext.SaveChangesAsync(c);
         var response = Map.FromEntity(chore);
-        await SendCreatedAtAsync<CreateChoreEndpoint>(new { id = chore.Id }, response);
+        await SendCreatedAtAsync<GetChoreByIdEndpoint>(new { id = chore.Id }, response);
     }
 }
