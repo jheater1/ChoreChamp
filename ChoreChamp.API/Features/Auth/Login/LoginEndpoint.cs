@@ -22,6 +22,8 @@ public class LoginEndpoint(
 
     public override async Task HandleAsync(LoginRequest request, CancellationToken c)
     {
+        var user = await dbContext
+            .Users.Where(user => user.Email == request.Email)
             .FirstOrDefaultAsync(c);
 
         if (user == null || !passwordService.VerifyPassword(request.Password, user.PasswordHash))
