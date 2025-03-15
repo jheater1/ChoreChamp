@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Security.Claims;
 using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
 using ChoreChamp.API.Shared.Constants;
@@ -10,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ChoreChamp.API.Features.Auth.Login;
 
 public class LoginEndpoint(
-    ChoreChampDbContext dbContext,
+    IChoreChampDbContext dbContext,
     IPasswordService passwordService,
     IRolePermissionService rolePermissionService
 ) : Ep.Req<LoginRequest>.NoRes

@@ -1,4 +1,4 @@
-﻿using ChoreChamp.API.Infrastructure.Seeder;
+﻿using ChoreChamp.API.Infrastructure.Persistence.Seeder;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 

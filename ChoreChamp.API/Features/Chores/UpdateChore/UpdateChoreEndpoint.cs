@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChoreChamp.API.Features.Chores.UpdateChore;
 
-public class UpdateChoreEndpoint(ChoreChampDbContext dbContext)
+public class UpdateChoreEndpoint(IChoreChampDbContext dbContext)
     : Ep.Req<UpdateChoreRequest>.Res<UpdateChoreResponse>.Map<UpdateChoreMapper>
 {
     public override void Configure()
@@ -25,7 +25,7 @@ public class UpdateChoreEndpoint(ChoreChampDbContext dbContext)
         }
 
         var chore = Map.ToEntity(r);
-        dbContext.Update(chore);
+        dbContext.Chores.Update(chore);
         await dbContext.SaveChangesAsync(c);
         Response = Map.FromEntity(chore);
     }
