@@ -23,7 +23,9 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
         public async Task ChangePassword_WithValidRequest_ChangesPassword()
         {
             // Arrange
-            var testUser = new User { Email = "test@test.com", PasswordHash = "oldHash" };
+            var passwordServiceMock = new Mock<IPasswordService>();
+
+            var testUser = new User("test", "test@test.com", "oldPassword", false, passwordServiceMock.Object);
 
             var userList = new List<User> { testUser };
             var userDbSetMock = userList.AsQueryable().BuildMockDbSet();
@@ -31,7 +33,7 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(userDbSetMock.Object);
 
-            var passwordServiceMock = new Mock<IPasswordService>();
+            
             // Verify current password check
             passwordServiceMock
                 .Setup(p => p.VerifyPassword("oldPassword", "oldHash"))
@@ -109,15 +111,15 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
         public async Task ChangePassword_WithMismatchedPasswords_ReturnsBadRequest()
         {
             // Arrange
-            var testUser = new User { Email = "test@test.com", PasswordHash = "oldHash" };
+            var passwordServiceMock = new Mock<IPasswordService>();
+
+            var testUser = new User("Test", "test@test.com", "oldPassword", false, passwordServiceMock.Object);
 
             var userList = new List<User> { testUser };
             var userDbSetMock = userList.AsQueryable().BuildMockDbSet();
 
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(userDbSetMock.Object);
-
-            var passwordServiceMock = new Mock<IPasswordService>();
 
             var endpoint = Factory.Create<ChangePasswordEndpoint>(ctx =>
             {
@@ -157,7 +159,9 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
         public async Task ChangePassword_WithInvalidCurrentPassword_ReturnsUnauthorized()
         {
             // Arrange
-            var testUser = new User { Email = "test@test.com", PasswordHash = "oldHash" };
+            var passwordServiceMock = new Mock<IPasswordService>();
+
+            var testUser = new User("Test", "test@test.com", "oldPassword", false, passwordServiceMock.Object);
 
             var userList = new List<User> { testUser };
             var userDbSetMock = userList.AsQueryable().BuildMockDbSet();
@@ -165,7 +169,7 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(userDbSetMock.Object);
 
-            var passwordServiceMock = new Mock<IPasswordService>();
+            
             // Setup password verification to fail.
             passwordServiceMock
                 .Setup(p => p.VerifyPassword("wrongOldPassword", "oldHash"))

@@ -62,7 +62,7 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
             });
 
             // Create a sample request using the record's positional parameters.
-            var request = new CreateUserRequest("Test User", "test@example.com", "secret", false);
+            var request = new CreateUserRequest("Test User", "test@example.com", "Password1", false);
 
             // Act
             await endpoint.HandleAsync(request, CancellationToken.None);
@@ -86,16 +86,12 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
         public async Task CreateUser_WhenUserExists_ReturnsConflict()
         {
             // Arrange
+            var passwordServiceMock = new Mock<IPasswordService>();
+
             // Set up an in-memory list with an existing user having the same email.
-            var existingUser = new User
-            {
-                Id = 1,
-                Name = "Existing User",
-                Email = "test@example.com",
-                PasswordHash = "existingHash",
-                IsAdmin = false,
-                Points = 10,
-            };
+            var existingUser = new User("Existing User", "test@example.com", "Password1", false, passwordServiceMock.Object);
+            existingUser.AddPoints(10);
+
             var users = new List<User> { existingUser };
             var usersDbSetMock = users.AsQueryable().BuildMockDbSet();
 
@@ -103,7 +99,7 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
             dbContextMock.Setup(x => x.Users).Returns(usersDbSetMock.Object);
 
             // Password service is not used in this branch.
-            var passwordServiceMock = new Mock<IPasswordService>();
+            
 
             var endpoint = Factory.Create<CreateUserEndpoint>(ctx =>
             {

@@ -50,24 +50,8 @@ public class DevDataSeeder
 
         var users = new List<User>
         {
-            new User
-            {
-                Name = "Admin User",
-                Email = "admin@example.com",
-                PasswordHash = _passwordService.HashPassword("AdminPassword123"),
-                IsAdmin = true,
-                Points = 0,
-                CreatedAt = DateTime.UtcNow,
-            },
-            new User
-            {
-                Name = "Regular User",
-                Email = "user@example.com",
-                PasswordHash = _passwordService.HashPassword("UserPassword123"),
-                IsAdmin = false,
-                Points = 0,
-                CreatedAt = DateTime.UtcNow,
-            },
+            new User("Admin User", "admin@example.com", "AdminPassword123", true, _passwordService),
+            new User("Regular User", "user@example.com", "UserPassword123", false, _passwordService),
         };
 
         _dbContext.Users.AddRange(users);
