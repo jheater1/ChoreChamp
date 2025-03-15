@@ -3,13 +3,10 @@ using FastEndpoints;
 
 namespace ChoreChamp.API.Templates.Features.Feature;
 
-public class FeatureEndpoint(ChoreChampDbContext dbContext)
+public class FeatureEndpoint(IChoreChampDbContext dbContext)
     : Ep.Req<FeatureRequest>.Res<FeatureResponse>.Map<FeatureMapper>
 {
-    public override void Configure()
-    {
-
-    }
+    public override void Configure() { }
 
     public override async Task HandleAsync(FeatureRequest r, CancellationToken c)
     {
