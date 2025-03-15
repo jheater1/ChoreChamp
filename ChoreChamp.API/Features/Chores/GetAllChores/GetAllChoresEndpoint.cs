@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChoreChamp.API.Features.Chores.GetAllChores;
 
-public class GetAllChoresEndpoint(ChoreChampDbContext dbContext) : 
-    Ep.NoReq.Res<IEnumerable<GetAllChoresResponse>>.Map<GetAllChoresMapper>
+public class GetAllChoresEndpoint(IChoreChampDbContext dbContext)
+    : Ep.NoReq.Res<IEnumerable<GetAllChoresResponse>>.Map<GetAllChoresMapper>
 {
     public override void Configure()
     {

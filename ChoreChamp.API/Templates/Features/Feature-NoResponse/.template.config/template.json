@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Your Name",
+  "classifications": [ "ChoreChamp Feature without Response" ],
+  "name": "ChoreChamp Feature without Response",
+  "identity": "ChoreChamp.FeatureNoResponse",
+  "shortName": "feature-noresponse",
+  "sourceName": "FeatureNoResponse",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  }
+}

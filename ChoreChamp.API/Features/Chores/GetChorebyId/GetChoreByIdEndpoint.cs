@@ -1,13 +1,11 @@
-﻿using ChoreChamp.API.Domain;
-using ChoreChamp.API.Infrastructure.Persistence;
+﻿using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Shared.Constants;
 using FastEndpoints;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ChoreChamp.API.Features.Chores.GetChorebyId;
 
-public class GetChoreByIdEndpoint(ChoreChampDbContext dbContext) :
-    Ep.Req<GetChoreByIdRequest>.Res<GetChoreByIdResponse>.Map<GetChoreByIdMapper>
+public class GetChoreByIdEndpoint(IChoreChampDbContext dbContext)
+    : Ep.Req<GetChoreByIdRequest>.Res<GetChoreByIdResponse>.Map<GetChoreByIdMapper>
 {
     public override void Configure()
     {
