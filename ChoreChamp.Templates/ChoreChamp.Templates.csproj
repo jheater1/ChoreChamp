@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="Fastendpoints\Features\Feature-Full\.template.config\template.json" />
+    <Content Include="Fastendpoints\Features\Feature-NoRequest\.template.config\template.json" />
+    <Content Include="Fastendpoints\Features\Feature-NoResponse\.template.config\template.json" />
+  </ItemGroup>
+
 </Project>
