@@ -5,8 +5,5 @@ namespace ChoreChamp.API.Templates.Features.Feature_NoResponse;
 
 public class FeatureNoResponseValidator : Validator<FeatureNoResponseRequest>
 {
-    public FeatureNoResponseValidator()
-    {
-        
-    }
+    public FeatureNoResponseValidator() { }
 }

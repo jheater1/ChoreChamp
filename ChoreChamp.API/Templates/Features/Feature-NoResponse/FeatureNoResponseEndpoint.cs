@@ -6,13 +6,7 @@ namespace ChoreChamp.API.Templates.Features.Feature;
 public class FeatureNoResponseEndpoint(ChoreChampDbContext dbContext)
     : Ep.Req<FeatureNoResponseRequest>.NoRes
 {
-    public override void Configure()
-    {
+    public override void Configure() { }
 
-    }
-
-    public override async Task HandleAsync(FeatureNoResponseRequest r, CancellationToken c)
-    {
-        
-    }
+    public override async Task HandleAsync(FeatureNoResponseRequest r, CancellationToken c) { }
 }
