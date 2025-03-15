@@ -27,4 +27,6 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Check Formatting
-      run: dotnet csharpier --check
+      run: |
+        dotnet tool restore
+        dotnet csharpier --check .
