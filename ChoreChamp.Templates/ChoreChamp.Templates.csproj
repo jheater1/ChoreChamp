@@ -12,4 +12,8 @@
     <Content Include="Fastendpoints\Features\Feature-NoResponse\.template.config\template.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChoreChamp.API\ChoreChamp.API.csproj" />
+  </ItemGroup>
+
 </Project>
