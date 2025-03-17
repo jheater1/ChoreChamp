@@ -1,5 +1,5 @@
-﻿using ChoreChamp.API.Infrastructure.Security;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using ChoreChamp.API.Infrastructure.Security;
 
 namespace ChoreChamp.API.Domain;
 
@@ -22,10 +22,14 @@ public record Password
             throw new ArgumentException("Password cannot be empty or whitespace.");
 
         if (rawPassword.Length < MinLength || rawPassword.Length > MaxLength)
-            throw new ArgumentException($"Password must be between {MinLength} and {MaxLength} characters.");
+            throw new ArgumentException(
+                $"Password must be between {MinLength} and {MaxLength} characters."
+            );
 
         if (!PasswordRegex.IsMatch(rawPassword))
-            throw new ArgumentException("Password must contain at least one lowercase letter, one uppercase letter, and one number.");
+            throw new ArgumentException(
+                "Password must contain at least one lowercase letter, one uppercase letter, and one number."
+            );
 
         string passwordHash = passwordService.HashPassword(rawPassword);
         return new Password(passwordHash);

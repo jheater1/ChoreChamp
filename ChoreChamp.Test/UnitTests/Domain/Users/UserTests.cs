@@ -24,9 +24,17 @@ public class UserTests
 
         _passwordServicerMock.Setup(ph => ph.HashPassword(oldPassword)).Returns(hashedOldPassword);
         _passwordServicerMock.Setup(ph => ph.HashPassword(newPassword)).Returns(hashedNewPassword);
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(oldPassword, hashedOldPassword)).Returns(true);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(oldPassword, hashedOldPassword))
+            .Returns(true);
 
-        var user = new User("New User", "user@example.com", oldPassword, false, _passwordServicerMock.Object);
+        var user = new User(
+            "New User",
+            "user@example.com",
+            oldPassword,
+            false,
+            _passwordServicerMock.Object
+        );
 
         // Act
         user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object);
@@ -44,13 +52,21 @@ public class UserTests
         string hashedOldPassword = "hashed_old";
 
         _passwordServicerMock.Setup(ph => ph.HashPassword(oldPassword)).Returns(hashedOldPassword);
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(It.IsAny<string>(), hashedOldPassword)).Returns(false);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(It.IsAny<string>(), hashedOldPassword))
+            .Returns(false);
 
-        var user = new User("New User", "user@example.com", oldPassword, false, _passwordServicerMock.Object);
+        var user = new User(
+            "New User",
+            "user@example.com",
+            oldPassword,
+            false,
+            _passwordServicerMock.Object
+        );
 
         // Act & Assert
-        var exception = Assert.Throws<UnauthorizedAccessException>(() =>
-            user.UpdatePassword("WrongOldPassword", newPassword, _passwordServicerMock.Object)
+        var exception = Assert.Throws<UnauthorizedAccessException>(
+            () => user.UpdatePassword("WrongOldPassword", newPassword, _passwordServicerMock.Object)
         );
 
         Assert.Equal("Invalid password.", exception.Message);
@@ -64,13 +80,21 @@ public class UserTests
         string newPassword = "short"; // Invalid password (too short)
 
         _passwordServicerMock.Setup(p => p.HashPassword(oldPassword)).Returns("hashed_old");
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(oldPassword, It.IsAny<string>())).Returns(true);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(oldPassword, It.IsAny<string>()))
+            .Returns(true);
 
-        var user = new User("New User", "user@example.com", oldPassword, false, _passwordServicerMock.Object);
+        var user = new User(
+            "New User",
+            "user@example.com",
+            oldPassword,
+            false,
+            _passwordServicerMock.Object
+        );
 
         // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() =>
-            user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object)
+        var exception = Assert.Throws<ArgumentException>(
+            () => user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object)
         );
 
         Assert.Contains("Password must be between 8 and 64 characters.", exception.Message);
@@ -84,16 +108,27 @@ public class UserTests
         string newPassword = "thisisalongpassword"; // Invalid password (no numerical character)
 
         _passwordServicerMock.Setup(p => p.HashPassword(oldPassword)).Returns("hashed_old");
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(oldPassword, It.IsAny<string>())).Returns(true);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(oldPassword, It.IsAny<string>()))
+            .Returns(true);
 
-        var user = new User("New User", "user@example.com", oldPassword, false, _passwordServicerMock.Object);
-
-        // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() =>
-            user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object)
+        var user = new User(
+            "New User",
+            "user@example.com",
+            oldPassword,
+            false,
+            _passwordServicerMock.Object
         );
 
-        Assert.Contains("Password must contain at least one lowercase letter, one uppercase letter, and one number.", exception.Message);
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentException>(
+            () => user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object)
+        );
+
+        Assert.Contains(
+            "Password must contain at least one lowercase letter, one uppercase letter, and one number.",
+            exception.Message
+        );
     }
 
     [Fact]
@@ -104,9 +139,17 @@ public class UserTests
         string hashedPassword = "hashed_pass";
 
         _passwordServicerMock.Setup(ph => ph.HashPassword(password)).Returns(hashedPassword);
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(password, hashedPassword)).Returns(true);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(password, hashedPassword))
+            .Returns(true);
 
-        var user = new User("New User", "user@example.com", password, false, _passwordServicerMock.Object);
+        var user = new User(
+            "New User",
+            "user@example.com",
+            password,
+            false,
+            _passwordServicerMock.Object
+        );
 
         // Act & Assert
         Assert.True(user.VerifyPassword(password, _passwordServicerMock.Object));
@@ -120,9 +163,17 @@ public class UserTests
         string hashedPassword = "hashed_pass";
 
         _passwordServicerMock.Setup(ph => ph.HashPassword(password)).Returns(hashedPassword);
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(password, hashedPassword)).Returns(false);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(password, hashedPassword))
+            .Returns(false);
 
-        var user = new User("New User", "user@example.com", password, false, _passwordServicerMock.Object);
+        var user = new User(
+            "New User",
+            "user@example.com",
+            password,
+            false,
+            _passwordServicerMock.Object
+        );
 
         // Act & Assert
         Assert.False(user.VerifyPassword("WrongPassword", _passwordServicerMock.Object));
@@ -136,10 +187,18 @@ public class UserTests
 
         // Set up password service mock
         _passwordServicerMock.Setup(p => p.HashPassword(password)).Returns("hashed_password");
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(password, It.IsAny<string>())).Returns(true);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(password, It.IsAny<string>()))
+            .Returns(true);
 
         // Set up user
-        var user = new User("New User", "user@example.com", password, false, _passwordServicerMock.Object);
+        var user = new User(
+            "New User",
+            "user@example.com",
+            password,
+            false,
+            _passwordServicerMock.Object
+        );
 
         // Act
         user.AddPoints(10);
@@ -156,10 +215,18 @@ public class UserTests
 
         // Set up password service mock
         _passwordServicerMock.Setup(p => p.HashPassword(password)).Returns("hashed_password");
-        _passwordServicerMock.Setup(ph => ph.VerifyPassword(password, It.IsAny<string>())).Returns(true);
+        _passwordServicerMock
+            .Setup(ph => ph.VerifyPassword(password, It.IsAny<string>()))
+            .Returns(true);
 
         // Set up user
-        var user = new User("New User", "user@example.com", password, false, _passwordServicerMock.Object);
+        var user = new User(
+            "New User",
+            "user@example.com",
+            password,
+            false,
+            _passwordServicerMock.Object
+        );
 
         // Act
         user.AddPoints(100);

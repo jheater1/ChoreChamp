@@ -32,14 +32,19 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
             passwordServiceMock.Setup(p => p.HashPassword("newPassword1")).Returns("newHash");
             passwordServiceMock.Setup(p => p.HashPassword("oldPassword1")).Returns("oldHash");
 
-            var testUser = new User("test", "test@test.com", "oldPassword1", false, passwordServiceMock.Object);
+            var testUser = new User(
+                "test",
+                "test@test.com",
+                "oldPassword1",
+                false,
+                passwordServiceMock.Object
+            );
 
             var userList = new List<User> { testUser };
             var userDbSetMock = userList.AsQueryable().BuildMockDbSet();
 
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(userDbSetMock.Object);
-
 
             var endpoint = Factory.Create<ChangePasswordEndpoint>(ctx =>
             {
@@ -114,7 +119,13 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
             var passwordServiceMock = new Mock<IPasswordService>();
             passwordServiceMock.Setup(p => p.HashPassword("oldPassword1")).Returns("oldHash");
 
-            var testUser = new User("Test", "test@test.com", "oldPassword1", false, passwordServiceMock.Object);
+            var testUser = new User(
+                "Test",
+                "test@test.com",
+                "oldPassword1",
+                false,
+                passwordServiceMock.Object
+            );
 
             var userList = new List<User> { testUser };
             var userDbSetMock = userList.AsQueryable().BuildMockDbSet();
@@ -163,14 +174,19 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.ChangePassword
             var passwordServiceMock = new Mock<IPasswordService>();
             passwordServiceMock.Setup(p => p.HashPassword("oldPassword1")).Returns("oldHash");
 
-            var testUser = new User("Test", "test@test.com", "oldPassword1", false, passwordServiceMock.Object);
+            var testUser = new User(
+                "Test",
+                "test@test.com",
+                "oldPassword1",
+                false,
+                passwordServiceMock.Object
+            );
 
             var userList = new List<User> { testUser };
             var userDbSetMock = userList.AsQueryable().BuildMockDbSet();
 
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(userDbSetMock.Object);
-
 
             var endpoint = Factory.Create<ChangePasswordEndpoint>(ctx =>
             {

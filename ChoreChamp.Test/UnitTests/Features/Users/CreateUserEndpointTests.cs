@@ -63,7 +63,12 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
             });
 
             // Create a sample request using the record's positional parameters.
-            var request = new CreateUserRequest("Test User", "test@example.com", "Password1", false);
+            var request = new CreateUserRequest(
+                "Test User",
+                "test@example.com",
+                "Password1",
+                false
+            );
 
             // Act
             await endpoint.HandleAsync(request, CancellationToken.None);
@@ -91,7 +96,13 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
             passwordServiceMock.Setup(p => p.HashPassword("Password1")).Returns("oldHash");
 
             // Set up an in-memory list with an existing user having the same email.
-            var existingUser = new User("Existing User", "test@example.com", "Password1", false, passwordServiceMock.Object);
+            var existingUser = new User(
+                "Existing User",
+                "test@example.com",
+                "Password1",
+                false,
+                passwordServiceMock.Object
+            );
             existingUser.AddPoints(10);
 
             var users = new List<User> { existingUser };
@@ -99,7 +110,6 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
 
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(usersDbSetMock.Object);
-
 
             var endpoint = Factory.Create<CreateUserEndpoint>(ctx =>
             {

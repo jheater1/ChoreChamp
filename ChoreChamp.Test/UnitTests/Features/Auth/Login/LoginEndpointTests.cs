@@ -25,7 +25,13 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.Login
             passwordServiceMock.Setup(p => p.HashPassword("Password1")).Returns("hashed");
             passwordServiceMock.Setup(p => p.VerifyPassword("Password1", "hashed")).Returns(true);
 
-            var testUser = new User("Test", "test@test.com", "Password1", false, passwordServiceMock.Object);
+            var testUser = new User(
+                "Test",
+                "test@test.com",
+                "Password1",
+                false,
+                passwordServiceMock.Object
+            );
 
             // Create an in-memory list for Users and build a mock DbSet.
             var userList = new List<User> { testUser };

@@ -14,7 +14,13 @@ public class User
 
     private User() { }
 
-    public User(string name, string email, string rawPassword, bool isAdmin, IPasswordService passwordService)
+    public User(
+        string name,
+        string email,
+        string rawPassword,
+        bool isAdmin,
+        IPasswordService passwordService
+    )
     {
         Name = name;
         Email = email;
@@ -24,7 +30,11 @@ public class User
         Password = Password.Create(rawPassword, passwordService);
     }
 
-    public void UpdatePassword(string oldPassword, string newPassword, IPasswordService passwordService)
+    public void UpdatePassword(
+        string oldPassword,
+        string newPassword,
+        IPasswordService passwordService
+    )
     {
         if (!Password.Verify(oldPassword, passwordService))
             throw new UnauthorizedAccessException("Invalid password.");

@@ -3,6 +3,7 @@
 public record Points
 {
     public int Value { get; init; }
+
     public Points(int value)
     {
         Value = value;
