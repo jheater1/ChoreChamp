@@ -51,7 +51,13 @@ public class DevDataSeeder
         var users = new List<User>
         {
             new User("Admin User", "admin@example.com", "AdminPassword123", true, _passwordService),
-            new User("Regular User", "user@example.com", "UserPassword123", false, _passwordService),
+            new User(
+                "Regular User",
+                "user@example.com",
+                "UserPassword123",
+                false,
+                _passwordService
+            ),
         };
 
         _dbContext.Users.AddRange(users);

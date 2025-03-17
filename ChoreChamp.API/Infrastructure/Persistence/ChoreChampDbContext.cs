@@ -16,19 +16,21 @@ public class ChoreChampDbContext : DbContext, IChoreChampDbContext
     {
         modelBuilder.Entity<User>(e =>
         {
-            e.OwnsOne(u => u.Password, p =>
-            {
-                p.Property(p => p.PasswordHash)
-                .HasColumnName("PasswordHash")
-                .IsRequired();
-            });
+            e.OwnsOne(
+                u => u.Password,
+                p =>
+                {
+                    p.Property(p => p.PasswordHash).HasColumnName("PasswordHash").IsRequired();
+                }
+            );
 
-            e.OwnsOne(u => u.Points, p =>
-            {
-                p.Property(p => p.Value)
-                .HasColumnName("Points")
-                .IsRequired();
-            });
+            e.OwnsOne(
+                u => u.Points,
+                p =>
+                {
+                    p.Property(p => p.Value).HasColumnName("Points").IsRequired();
+                }
+            );
         });
     }
 }
