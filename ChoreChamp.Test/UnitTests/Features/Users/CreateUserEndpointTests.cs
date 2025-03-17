@@ -7,6 +7,7 @@ using ChoreChamp.API.Domain;
 using ChoreChamp.API.Features.Users.CreateUser;
 using ChoreChamp.API.Infrastructure.Persistence;
 using ChoreChamp.API.Infrastructure.Security;
+using ChoreChamp.Test;
 using FastEndpoints;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,7 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
 
             var passwordServiceMock = new Mock<IPasswordService>();
             // When hashing "secret", return a fake hash.
-            passwordServiceMock.Setup(p => p.HashPassword("secret")).Returns("hashedSecret");
+            passwordServiceMock.Setup(p => p.HashPassword("Password1")).Returns("hashedSecret");
 
             // Create the endpoint using FastEndpoints' test factory.
             var endpoint = Factory.Create<CreateUserEndpoint>(ctx =>
@@ -87,6 +88,7 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
         {
             // Arrange
             var passwordServiceMock = new Mock<IPasswordService>();
+            passwordServiceMock.Setup(p => p.HashPassword("Password1")).Returns("oldHash");
 
             // Set up an in-memory list with an existing user having the same email.
             var existingUser = new User("Existing User", "test@example.com", "Password1", false, passwordServiceMock.Object);
@@ -98,8 +100,6 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(usersDbSetMock.Object);
 
-            // Password service is not used in this branch.
-            
 
             var endpoint = Factory.Create<CreateUserEndpoint>(ctx =>
             {
@@ -112,7 +112,7 @@ namespace ChoreChamp.API.Tests.UnitTests.Features.Users
             });
 
             // Create a request that uses the same email as the existing user.
-            var request = new CreateUserRequest("New User", "test@example.com", "secret", false);
+            var request = new CreateUserRequest("New User", "test@example.com", "Password1", false);
 
             // Act
             await endpoint.HandleAsync(request, CancellationToken.None);
