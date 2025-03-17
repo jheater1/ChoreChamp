@@ -26,7 +26,7 @@ public class LoginEndpoint(
             .Users.Where(user => user.Email == request.Email)
             .FirstOrDefaultAsync(c);
 
-        if (user == null || !passwordService.VerifyPassword(request.Password, user.PasswordHash))
+        if (user == null || !user.VerifyPassword(request.Password, passwordService))
         {
             await SendUnauthorizedAsync();
             return;

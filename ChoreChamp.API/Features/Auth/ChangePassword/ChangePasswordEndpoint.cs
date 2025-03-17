@@ -38,15 +38,13 @@ public class ChangePasswordEndpoint(
             .Users.Where(user => user.Email == userEmail)
             .FirstOrDefaultAsync(c);
 
-        if (user == null || !passwordService.VerifyPassword(request.Password, user.PasswordHash))
+        if (user == null || !user.VerifyPassword(request.Password, passwordService))
         {
             await SendUnauthorizedAsync();
             return;
         }
 
-        var newHashedPassword = passwordService.HashPassword(request.NewPassword);
-
-        user.PasswordHash = newHashedPassword;
+        user.UpdatePassword(request.Password, request.NewPassword, passwordService);
         await dbContext.SaveChangesAsync(c);
 
         await SendNoContentAsync();

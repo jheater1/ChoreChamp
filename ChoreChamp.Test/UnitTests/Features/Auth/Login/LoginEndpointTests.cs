@@ -21,12 +21,17 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.Login
         public async Task Login_WithValidCredentials_ReturnsNoContent()
         {
             // Arrange
-            var testUser = new User
-            {
-                Email = "test@test.com",
-                PasswordHash = "hashed", // Assume this is the stored hash.
-                IsAdmin = false,
-            };
+            var passwordServiceMock = new Mock<IPasswordService>();
+            passwordServiceMock.Setup(p => p.HashPassword("Password1")).Returns("hashed");
+            passwordServiceMock.Setup(p => p.VerifyPassword("Password1", "hashed")).Returns(true);
+
+            var testUser = new User(
+                "Test",
+                "test@test.com",
+                "Password1",
+                false,
+                passwordServiceMock.Object
+            );
 
             // Create an in-memory list for Users and build a mock DbSet.
             var userList = new List<User> { testUser };
@@ -34,10 +39,6 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.Login
 
             var dbContextMock = new Mock<IChoreChampDbContext>();
             dbContextMock.Setup(x => x.Users).Returns(userDbSetMock.Object);
-
-            // Set up the password service mock to validate the password.
-            var passwordServiceMock = new Mock<IPasswordService>();
-            passwordServiceMock.Setup(p => p.VerifyPassword("password", "hashed")).Returns(true);
 
             // Set up the role permission service mock.
             var rolePermissionServiceMock = new Mock<IRolePermissionService>();
@@ -61,7 +62,7 @@ namespace ChoreChamp.Test.UnitTests.Features.Auth.Login
             });
 
             // Instantiate the request record using positional parameters.
-            var request = new LoginRequest("test@test.com", "password");
+            var request = new LoginRequest("test@test.com", "Password1");
 
             // Act
             await endpoint.HandleAsync(request, default);

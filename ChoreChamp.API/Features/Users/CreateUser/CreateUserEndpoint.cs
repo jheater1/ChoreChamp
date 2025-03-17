@@ -18,7 +18,7 @@ public class CreateUserEndpoint(IChoreChampDbContext dbContext, IPasswordService
 
     public override async Task HandleAsync(CreateUserRequest r, CancellationToken c)
     {
-        var user = Map.ToEntity(r);
+        var user = new User(r.Name, r.Email, r.Password, r.IsAdmin, passwordService);
 
         bool userExists = await dbContext.Users.AnyAsync(x => x.Email == r.Email, c);
         if (userExists)
@@ -28,7 +28,6 @@ public class CreateUserEndpoint(IChoreChampDbContext dbContext, IPasswordService
             return;
         }
 
-        user.PasswordHash = passwordService.HashPassword(r.Password);
         await dbContext.Users.AddAsync(user, c);
         await dbContext.SaveChangesAsync(c);
         await SendCreatedAtAsync<CreateUserEndpoint>(new { id = user.Id }, Map.FromEntity(user));
