@@ -1,7 +1,7 @@
 ﻿using ChoreChamp.API.Infrastructure.Persistence;
 using FastEndpoints;
 
-namespace ChoreChamp.API.Templates.Features.Feature;
+namespace ChoreChamp.Templates.Features.FeatureFull;
 
 public class FeatureEndpoint(IChoreChampDbContext dbContext)
     : Ep.Req<FeatureRequest>.Res<FeatureResponse>.Map<FeatureMapper>

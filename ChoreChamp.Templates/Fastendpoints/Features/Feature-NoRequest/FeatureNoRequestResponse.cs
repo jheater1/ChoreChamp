@@ -1,3 +1,3 @@
-﻿namespace ChoreChamp.API.Templates.Features.Feature;
+﻿namespace ChoreChamp.Templates.Features.FeatureNoRequest;
 
 public record FeatureNoRequestResponse();

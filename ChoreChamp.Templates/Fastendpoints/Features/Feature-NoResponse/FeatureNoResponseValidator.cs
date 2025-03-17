@@ -1,7 +1,6 @@
-﻿using ChoreChamp.API.Templates.Features.Feature;
-using FastEndpoints;
+﻿using FastEndpoints;
 
-namespace ChoreChamp.API.Templates.Features.Feature_NoResponse;
+namespace ChoreChamp.Templates.Features.FeatureNoResponse;
 
 public class FeatureNoResponseValidator : Validator<FeatureNoResponseRequest>
 {

@@ -1,6 +1,6 @@
 ﻿using FastEndpoints;
 
-namespace ChoreChamp.API.Templates.Features.Feature;
+namespace ChoreChamp.Templates.Features.FeatureNoRequest;
 
 public class FeatureNoRequestMapper : ResponseMapper<FeatureNoRequestResponse, object>
 {
