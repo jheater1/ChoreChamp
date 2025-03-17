@@ -1,5 +1,6 @@
 ﻿using ChoreChamp.API.Domain;
 using ChoreChamp.API.Infrastructure.Security;
+using FluentAssertions;
 using Moq;
 
 namespace ChoreChamp.Test.UnitTests.Domain.Users;
@@ -40,7 +41,7 @@ public class UserTests
         user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object);
 
         // Assert
-        Assert.Equal(hashedNewPassword, user.Password.PasswordHash);
+        user.Password.PasswordHash.Should().Be(hashedNewPassword);
     }
 
     [Fact]
@@ -65,11 +66,10 @@ public class UserTests
         );
 
         // Act & Assert
-        var exception = Assert.Throws<UnauthorizedAccessException>(
-            () => user.UpdatePassword("WrongOldPassword", newPassword, _passwordServicerMock.Object)
-        );
+        var act = () =>
+            user.UpdatePassword("WrongOldPassword", newPassword, _passwordServicerMock.Object);
 
-        Assert.Equal("Invalid password.", exception.Message);
+        act.Should().Throw<UnauthorizedAccessException>().WithMessage("Invalid password.");
     }
 
     [Fact]
@@ -93,11 +93,11 @@ public class UserTests
         );
 
         // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(
-            () => user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object)
-        );
+        var act = () => user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object);
 
-        Assert.Contains("Password must be between 8 and 64 characters.", exception.Message);
+        act.Should()
+            .Throw<ArgumentException>()
+            .WithMessage("Password must be between 8 and 64 characters.");
     }
 
     [Fact]
@@ -121,14 +121,13 @@ public class UserTests
         );
 
         // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(
-            () => user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object)
-        );
+        var act = () => user.UpdatePassword(oldPassword, newPassword, _passwordServicerMock.Object);
 
-        Assert.Contains(
-            "Password must contain at least one lowercase letter, one uppercase letter, and one number.",
-            exception.Message
-        );
+        act.Should()
+            .Throw<ArgumentException>()
+            .WithMessage(
+                "Password must contain at least one lowercase letter, one uppercase letter, and one number."
+            );
     }
 
     [Fact]
@@ -152,7 +151,7 @@ public class UserTests
         );
 
         // Act & Assert
-        Assert.True(user.VerifyPassword(password, _passwordServicerMock.Object));
+        user.VerifyPassword(password, _passwordServicerMock.Object).Should().BeTrue();
     }
 
     [Fact]
@@ -176,7 +175,7 @@ public class UserTests
         );
 
         // Act & Assert
-        Assert.False(user.VerifyPassword("WrongPassword", _passwordServicerMock.Object));
+        user.VerifyPassword("WrongPassword", _passwordServicerMock.Object).Should().BeFalse();
     }
 
     [Fact]
@@ -204,7 +203,7 @@ public class UserTests
         user.AddPoints(10);
 
         // Assert
-        Assert.Equal(10, user.Points.Value);
+        user.Points.Value.Should().Be(10);
     }
 
     [Fact]
@@ -230,11 +229,12 @@ public class UserTests
 
         // Act
         user.AddPoints(100);
-        Assert.Equal(100, user.Points.Value);
+        user.Points.Value.Should().Be(100);
 
         user.SubtractPoints(50);
 
         // Assert
         Assert.Equal(50, user.Points.Value);
+        user.Points.Value.Should().Be(50);
     }
 }

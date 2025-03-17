@@ -1,10 +1,28 @@
 ﻿using ChoreChamp.API.Domain;
+using FluentAssertions;
 using Xunit;
 
 namespace ChoreChamp.Test.UnitTests.Domain.AssignedChores;
 
 public class AssignedChoreTests
 {
+    [Fact]
+    public void CreateAssignedChore_WithValidParameters_ShouldCreateAssignedChore()
+    {
+        // Arrange
+        var userId = 1;
+        var choreId = 1;
+        var dueDate = DateTime.Now;
+        // Act
+        var assignedChore = new AssignedChore(userId, choreId, dueDate);
+        // Assert
+        assignedChore.UserId.Should().Be(userId);
+        assignedChore.ChoreId.Should().Be(choreId);
+        assignedChore.DueDate.Should().Be(dueDate);
+        assignedChore.IsCompleted.Should().BeFalse();
+        assignedChore.IsApproved.Should().BeFalse();
+    }
+
     [Fact]
     public void MarkCompleted_ShouldSetIsCompletedToTrue()
     {
@@ -13,7 +31,7 @@ public class AssignedChoreTests
         // Act
         assignedChore.MarkCompleted();
         // Assert
-        Assert.True(assignedChore.IsCompleted);
+        assignedChore.IsCompleted.Should().BeTrue();
     }
 
     [Fact]
@@ -25,7 +43,7 @@ public class AssignedChoreTests
         // Act
         assignedChore.Approve();
         // Assert
-        Assert.True(assignedChore.IsApproved);
+        assignedChore.IsApproved.Should().BeTrue();
     }
 
     [Fact]
@@ -34,9 +52,11 @@ public class AssignedChoreTests
         // Arrange
         var assignedChore = new AssignedChore(1, 1, DateTime.Now);
         // Act
-        void action() => assignedChore.Approve();
+        Action act = () => assignedChore.Approve();
         // Assert
-        Assert.Throws<InvalidOperationException>(action);
+        act.Should()
+            .Throw<InvalidOperationException>()
+            .WithMessage("Chore must be completed before approving.");
     }
 
     [Fact]
@@ -48,7 +68,7 @@ public class AssignedChoreTests
         // Act
         assignedChore.Reject();
         // Assert
-        Assert.False(assignedChore.IsCompleted);
+        assignedChore.IsCompleted.Should().BeFalse();
     }
 
     [Fact]
@@ -57,25 +77,10 @@ public class AssignedChoreTests
         // Arrange
         var assignedChore = new AssignedChore(1, 1, DateTime.Now);
         // Act
-        void action() => assignedChore.Reject();
+        var act = () => assignedChore.Reject();
         // Assert
-        Assert.Throws<InvalidOperationException>(action);
-    }
-
-    [Fact]
-    public void Constructor_ShouldSetProperties()
-    {
-        // Arrange
-        var userId = 1;
-        var choreId = 1;
-        var dueDate = DateTime.Now;
-        // Act
-        var assignedChore = new AssignedChore(userId, choreId, dueDate);
-        // Assert
-        Assert.Equal(userId, assignedChore.UserId);
-        Assert.Equal(choreId, assignedChore.ChoreId);
-        Assert.Equal(dueDate, assignedChore.DueDate);
-        Assert.False(assignedChore.IsCompleted);
-        Assert.False(assignedChore.IsApproved);
+        act.Should()
+            .Throw<InvalidOperationException>()
+            .WithMessage("Chore must be completed before rejecting.");
     }
 }
