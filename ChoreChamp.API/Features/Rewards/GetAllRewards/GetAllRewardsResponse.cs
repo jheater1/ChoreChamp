@@ -5,6 +5,6 @@ public record GetAllRewardsResponse(
     string Naame,
     string? Description,
     int PointCost,
-    int Limit,
+    int? Limit,
     bool IsAvailable
 );

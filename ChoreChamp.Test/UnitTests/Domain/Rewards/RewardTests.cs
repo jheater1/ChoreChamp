@@ -30,9 +30,8 @@ public class RewardTests
         var name = "";
         var description = "Test Description";
         var pointCost = 100;
-        var limit = 10;
         // Act
-        Action act = () => new Reward(name, description, pointCost, limit);
+        Action act = () => new Reward(name, description, pointCost);
         // Assert
         act.Should().Throw<ArgumentException>().WithMessage("Name cannot be null or whitespace.");
     }
@@ -44,11 +43,12 @@ public class RewardTests
         var name = "Test Reward";
         var description = "Test Description";
         var pointCost = -100;
-        var limit = 10;
         // Act
-        Action act = () => new Reward(name, description, pointCost, limit);
+        Action act = () => new Reward(name, description, pointCost);
         // Assert
-        act.Should().Throw<ArgumentException>().WithMessage("Point cost cannot be negative.");
+        act.Should()
+            .Throw<ArgumentException>()
+            .WithMessage("Point cost cannot be less than or equal to 0.");
     }
 
     [Fact]
