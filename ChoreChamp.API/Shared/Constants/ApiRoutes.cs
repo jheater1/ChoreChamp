@@ -25,4 +25,10 @@ public static class ApiRoutes
     {
         public const string Base = "users";
     }
+
+    public static class Rewards
+    {
+        public const string Base = "rewards";
+        public const string ById = Base + RouteSegments.Id;
+    }
 }
