@@ -19,7 +19,7 @@ public class GetAllRewardsEndpoint(IChoreChampDbContext dbContext)
     {
         var rewards = new List<Reward>();
 
-        if (r.AllAvailable is not null && r.AllAvailable.Value)
+        if (r.AllAvailable)
         {
             rewards = await dbContext.Rewards.Where(r => r.IsAvailable).ToListAsync(c);
             Response = Map.FromEntity(rewards);
