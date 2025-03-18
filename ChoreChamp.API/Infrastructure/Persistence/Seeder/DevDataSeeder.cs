@@ -106,7 +106,6 @@ public class DevDataSeeder
         };
 
         rewards[3].UpdateAvailability();
-
         _dbContext.Rewards.AddRange(rewards);
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Seeded rewards.");
