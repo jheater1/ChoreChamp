@@ -20,8 +20,9 @@ public class GetAllRewardsTests
         var dbContextMock = new Mock<IChoreChampDbContext>();
         dbContextMock.Setup(x => x.Rewards).Returns(mockRewardDbSet.Object);
         var endpoint = Factory.Create<GetAllRewardsEndpoint>(dbContextMock.Object);
+        var request = new GetAllRewardsRequest(true);
         // Act
-        await endpoint.HandleAsync(default);
+        await endpoint.HandleAsync(request, default);
         var response = endpoint.Response;
         // Assert
         response.Should().NotBeNull();
@@ -37,9 +38,10 @@ public class GetAllRewardsTests
         // Create a mock for IApplicationDbContext.
         var dbContextMock = new Mock<IChoreChampDbContext>();
         dbContextMock.Setup(x => x.Rewards).Returns(mockRewardDbSet.Object);
-        var endpoint = Factory.Create<GetAllAvailableRewardsEndpoint>(dbContextMock.Object);
+        var endpoint = Factory.Create<GetAllRewardsEndpoint>(dbContextMock.Object);
+        var request = new GetAllRewardsRequest(true);
         // Act
-        await endpoint.HandleAsync(default);
+        await endpoint.HandleAsync(request, default);
         var response = endpoint.Response;
         // Assert
         response.Should().NotBeNull();
@@ -55,8 +57,9 @@ public class GetAllRewardsTests
         var dbContextMock = new Mock<IChoreChampDbContext>();
         dbContextMock.Setup(x => x.Rewards).Returns(mockRewardDbSet.Object);
         var endpoint = Factory.Create<GetAllRewardsEndpoint>(dbContextMock.Object);
+        var request = new GetAllRewardsRequest(null);
         // Act
-        await endpoint.HandleAsync(default);
+        await endpoint.HandleAsync(request, default);
         var response = endpoint.Response;
         // Assert
         response.Should().NotBeNull();
