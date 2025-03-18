@@ -101,7 +101,7 @@ public class DevDataSeeder
         {
             new Reward("Money", "1 Dollar", 10, 5),
             new Reward("Candy", "Twix, Hershey Bar, or Reese's ", 5, 5),
-            new Reward("Screen Time", "1 Hour", 30, 5)
+            new Reward("Screen Time", "1 Hour", 30, 5),
         };
 
         _dbContext.Rewards.AddRange(rewards);
