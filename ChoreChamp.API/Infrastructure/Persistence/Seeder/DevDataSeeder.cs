@@ -31,6 +31,7 @@ public class DevDataSeeder
 
             await SeedUsersAsync();
             await SeedChoresAsync();
+            await SeedRewardsAsync();
 
             await transaction.CommitAsync();
             _logger.LogInformation("Database seeding completed successfully.");
@@ -89,5 +90,22 @@ public class DevDataSeeder
         _dbContext.Chores.AddRange(chores);
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Seeded chores.");
+    }
+
+    private async Task SeedRewardsAsync()
+    {
+        if (await _dbContext.Rewards.AsNoTracking().AnyAsync())
+            return;
+
+        var rewards = new List<Reward>
+        {
+            new Reward("Money", "1 Dollar", 10, 5),
+            new Reward("Candy", "Twix, Hershey Bar, or Reese's ", 5, 5),
+            new Reward("Screen Time", "1 Hour", 30, 5)
+        };
+
+        _dbContext.Rewards.AddRange(rewards);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Seeded rewards.");
     }
 }
