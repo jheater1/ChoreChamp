@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Rewards\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
