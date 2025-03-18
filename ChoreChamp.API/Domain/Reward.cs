@@ -8,7 +8,6 @@ public class Reward
     public int PointCost { get; private set; }
     public int? Limit { get; private set; }
     public bool IsAvailable { get; private set; }
-    public object Points { get; set; }
 
     // EF Core constructor
     private Reward() { }
