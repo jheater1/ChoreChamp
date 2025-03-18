@@ -1,6 +1,6 @@
-﻿namespace ChoreChamp.API.Features.Rewards.GetAllRewards;
+﻿namespace ChoreChamp.API.Features.Rewards.GetRewardById;
 
-public record GetAllRewardsResponse(
+public record GetRewardByIdResponse(
     int Id,
     string Name,
     string? Description,
