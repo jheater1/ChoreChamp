@@ -99,11 +99,13 @@ public class DevDataSeeder
 
         var rewards = new List<Reward>
         {
-            new Reward("Money", "1 Dollar", 10, 5),
-            new Reward("Candy", "Twix, Hershey Bar, or Reese's ", 5, 5),
-            new Reward("Screen Time", "1 Hour", 30, 5),
+            new("Money", "1 Dollar", 10, 5),
+            new("Candy", "Twix, Hershey Bar, or Reese's ", 5, 5),
+            new("Screen Time", "1 Hour", 30, 5),
+            new("Not Available", "Not Available", 5, 5),
         };
 
+        rewards[3].UpdateAvailability();
         _dbContext.Rewards.AddRange(rewards);
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Seeded rewards.");
