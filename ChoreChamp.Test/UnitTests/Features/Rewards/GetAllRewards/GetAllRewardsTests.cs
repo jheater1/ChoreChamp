@@ -14,19 +14,19 @@ public class GetAllRewardsTests
     public async Task GetAllRewards_WhenCalledWithExistingRewards_ReturnsAllRewards()
     {
         // Arrange: Create a list of rewards and build a mock DbSet from it.
-        var mockRewards = RewardTestDataFactory.CreateRewards(2);
+        var mockRewards = RewardTestDataFactory.CreateRewards(3, true);
         var mockRewardDbSet = mockRewards.AsQueryable().BuildMockDbSet();
         // Create a mock for IApplicationDbContext.
         var dbContextMock = new Mock<IChoreChampDbContext>();
         dbContextMock.Setup(x => x.Rewards).Returns(mockRewardDbSet.Object);
         var endpoint = Factory.Create<GetAllRewardsEndpoint>(dbContextMock.Object);
-        var request = new GetAllRewardsRequest(true);
+        var request = new GetAllRewardsRequest();
         // Act
         await endpoint.HandleAsync(request, default);
         var response = endpoint.Response;
         // Assert
         response.Should().NotBeNull();
-        response.Should().HaveCount(2);
+        response.Should().HaveCount(3);
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class GetAllRewardsTests
         var dbContextMock = new Mock<IChoreChampDbContext>();
         dbContextMock.Setup(x => x.Rewards).Returns(mockRewardDbSet.Object);
         var endpoint = Factory.Create<GetAllRewardsEndpoint>(dbContextMock.Object);
-        var request = new GetAllRewardsRequest(null);
+        var request = new GetAllRewardsRequest();
         // Act
         await endpoint.HandleAsync(request, default);
         var response = endpoint.Response;
